@@ -3,3 +3,5 @@ pydantic
 databases
 sqlalchemy
 uvicorn
+alembic
+psycopg2-binary
