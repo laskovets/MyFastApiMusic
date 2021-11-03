@@ -1,9 +1,11 @@
 from fastapi import FastAPI
-from app.routers import main
+from app.routers import main, tracks, author
 
 
 app = FastAPI(title='Music Api')
 app.include_router(main.router)
+app.include_router(tracks.router)
+app.include_router(author.router)
 
 
 if __name__ == '__main__':
