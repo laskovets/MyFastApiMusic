@@ -1,5 +1,8 @@
-# to get a string like this run:
-# openssl rand -hex 32
-SECRET_KEY = 'a8c9e957a7d7421b0fe3589f8dda97835b41d981dc9831bb7436876f4e249822'
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
+ALGORITHM = os.environ.get('ALGORITHM', 'HS256')
+ACCESS_TOKEN_EXPIRE_MINUTES = os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES', 30)
