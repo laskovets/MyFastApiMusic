@@ -19,7 +19,7 @@ router = APIRouter()
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
-@router.post("/authorization/register/", response_model=AuthorSchema, status_code=status.HTTP_201_CREATED)
+@router.post("/register/", response_model=AuthorSchema, status_code=status.HTTP_201_CREATED)
 async def register(*, new_author: CreateSchema, db: Session = Depends(get_db)):
     hashed_password = pwd_context.hash(new_author.password)
     instance, created = await get_or_create(db, Author, {'name': new_author.name}, {'password': hashed_password})
