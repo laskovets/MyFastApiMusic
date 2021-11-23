@@ -2,7 +2,7 @@ from fastapi.routing import APIRouter, Request
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from app.schemas.author import AuthorSchema, AuthorBase
-from app.deps import get_db
+from db.deps import get_db
 from app.models.author import Author
 
 

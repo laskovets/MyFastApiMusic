@@ -1,0 +1,5 @@
+# to get a string like this run:
+# openssl rand -hex 32
+SECRET_KEY = 'a8c9e957a7d7421b0fe3589f8dda97835b41d981dc9831bb7436876f4e249822'
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30

@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker
 
 
 SQLALCHEMY_DATABASE_URI = "postgresql://admin:admin@localhost/my_fast_api_music"

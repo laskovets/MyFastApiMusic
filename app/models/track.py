@@ -9,6 +9,6 @@ class Track(Base):
     listeners = Column(Integer, nullable=False, default=0)
     playcount = Column(Integer, nullable=False, default=0)
     author_id = Column(Integer, ForeignKey('author.id'), nullable=True, default=None)
-    author = relationship('AuthorSchema', back_populates='tracks')
+    author = relationship('Author', cascade='all,delete-orphan', back_populates='tracks', single_parent=True)
     album_id = Column(Integer, ForeignKey('album.id'), nullable=True, default=None)
-    album = relationship('Album', back_populates='tracks')
+    album = relationship('Album', cascade='all,delete-orphan', back_populates='tracks', single_parent=True)
