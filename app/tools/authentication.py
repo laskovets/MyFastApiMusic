@@ -25,7 +25,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
-def get_author(name: str, db: Session = Depends(get_db)):
+def get_author(name: str):
+    db = next(get_db())
     author = db.query(Author).filter_by(**{'name': name}).one_or_none()
     if author is not None:
         return AuthorSchema(**author.__dict__)
@@ -52,6 +53,4 @@ async def get_current_author(token: str = Depends(oauth2_scheme)):
 
 
 async def get_current_active_author(current_author: Author = Depends(get_current_author)):
-    if current_author.disabled:
-        raise HTTPException(status_code=400, detail='Inactive user')
     return current_author

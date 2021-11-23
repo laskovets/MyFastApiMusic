@@ -28,15 +28,7 @@ async def register(*, new_author: CreateSchema, db: Session = Depends(get_db)):
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="This author already exists!")
 
 
-# @router.get("/token/")
-# async def login_author_for_access_token(*, author: CreateSchema, db: Session = Depends(get_db)):
-#     hashed_password = pwd_context.hash(author.password)
-#     db_author = db.query(Author).filter_by(**{'name': author.name, 'password': hashed_password}).one_or_none()
-#     if db_author is None:
-#         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect author name or password")
-
-
-@router.post("/authorization/token/", response_model=Token)
+@router.post("/token/", response_model=Token)
 async def login_author_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     author = db.query(Author).filter_by(**{'name': form_data.username}).one_or_none()
     if (not author) or (not pwd_context.verify(form_data.password, author.password)):
