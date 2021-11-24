@@ -14,3 +14,13 @@ services:
       - 5432:5432
     volumes:
       - .:/var/lib/postgresql/data
+
+  python_app:
+    restart: always
+    depends_on:
+      - postgres_music
+    ports:
+      - 8080:8080
+    environment:
+      DB_HOST: "postgres_music"
+    build: .

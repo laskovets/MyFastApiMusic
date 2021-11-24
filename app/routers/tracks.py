@@ -1,9 +1,9 @@
 from fastapi.routing import APIRouter, Request
 from fastapi import Path, Depends
 from sqlalchemy.orm import Session
-from app.schemas.tracks import TrackBase
+from schemas.tracks import TrackBase
 from db.deps import get_db
-from app.db.base import Track
+from db.base import Track
 
 
 router = APIRouter()

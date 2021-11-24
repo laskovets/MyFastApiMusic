@@ -8,11 +8,11 @@ from passlib.context import CryptContext
 from db.base import Author
 from db.deps import get_db
 from datetime import timedelta
-from app.schemas.author import CreateSchema, AuthorSchema
-from app.schemas.authentication import Token
-from app.db.query_tools import get_or_create
-from app.settings import ACCESS_TOKEN_EXPIRE_MINUTES
-from app.tools.authentication import create_access_token, get_current_active_author
+from schemas.author import CreateSchema, AuthorSchema
+from schemas.authentication import Token
+from db.query_tools import get_or_create
+from settings import ACCESS_TOKEN_EXPIRE_MINUTES
+from tools.authentication import create_access_token, get_current_active_author
 
 
 router = APIRouter()

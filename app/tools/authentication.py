@@ -2,13 +2,12 @@ from typing import Optional
 from datetime import timedelta, datetime
 from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
-from app.settings import ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY, ALGORITHM
-from app.db.base import Author
-from app.db.deps import get_db
-from app.schemas.authentication import TokenData
-from app.schemas.author import AuthorSchema
+from fastapi.security import OAuth2PasswordBearer
+from settings import SECRET_KEY, ALGORITHM
+from db.base import Author
+from db.deps import get_db
+from schemas.authentication import TokenData
+from schemas.author import AuthorSchema
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

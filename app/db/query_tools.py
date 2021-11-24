@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import Tuple, Type
-from app.db.base_class import Base
+from db.base_class import Base
 
 
 async def get_or_create(db: Session, model: Type[Base], filter_fields: dict, other_fields: dict = {}) -> Tuple[Base, bool]:

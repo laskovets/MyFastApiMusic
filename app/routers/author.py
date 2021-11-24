@@ -1,9 +1,9 @@
 from fastapi.routing import APIRouter, Request
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from app.schemas.author import AuthorSchema, AuthorBase
+from schemas.author import AuthorSchema, AuthorBase
 from db.deps import get_db
-from app.models.author import Author
+from models.author import Author
 
 
 router = APIRouter()

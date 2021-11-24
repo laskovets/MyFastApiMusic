@@ -1,3 +1,4 @@
-from app.models.author import Author
-from app.models.album import Album
-from app.models.track import Track
+from db.base_class import Base
+from models.author import Author
+from models.album import Album
+from models.track import Track
