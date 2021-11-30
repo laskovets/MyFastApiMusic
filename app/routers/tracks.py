@@ -11,7 +11,7 @@ router = APIRouter()
 
 @router.get('/tracks/{id}', response_model=TrackBase)
 async def get_track(*, id: int = Path(..., gt=0), request: Request, db: Session = Depends(get_db)) -> dict:
-    result = db.query(Track).filter(Track.id == id).first()
+    result = await db.query(Track).filter(Track.id == id).first()
     if result is None:
         return {}
     return TrackBase(**result).dict()

@@ -3,7 +3,8 @@ from fastapi import Depends
 from fastapi import status
 from fastapi.exceptions import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from passlib.context import CryptContext
 from db.base import Author
 from db.deps import get_db
@@ -20,7 +21,7 @@ pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
 @router.post("/register/", response_model=AuthorSchema, status_code=status.HTTP_201_CREATED)
-async def register(*, new_author: CreateSchema, db: Session = Depends(get_db)):
+async def register(*, new_author: CreateSchema, db: AsyncSession = Depends(get_db)):
     hashed_password = pwd_context.hash(new_author.password)
     instance, created = await get_or_create(db, Author, {'name': new_author.name}, {'password': hashed_password})
     if created:
@@ -29,9 +30,10 @@ async def register(*, new_author: CreateSchema, db: Session = Depends(get_db)):
 
 
 @router.post("/token/", response_model=Token)
-async def login_author_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    author = db.query(Author).filter_by(**{'name': form_data.username}).one_or_none()
-    if (not author) or (not pwd_context.verify(form_data.password, author.password)):
+async def login_author_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)):
+    q = select(Author).filter_by(**{'name': form_data.username})
+    author = (await db.execute(q)).first()
+    if (not author) or (not pwd_context.verify(form_data.password, author[0].password)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -40,7 +42,7 @@ async def login_author_for_access_token(form_data: OAuth2PasswordRequestForm = D
 
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={'sub': author.name},
+        data={'sub': author[0].name},
         expires_delta=access_token_expires
     )
     return {'access_token': access_token, "token_type": "bearer"}

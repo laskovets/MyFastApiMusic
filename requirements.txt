@@ -1,10 +1,11 @@
 fastapi[all]
 pydantic
 databases
-sqlalchemy
+sqlalchemy[asyncio]
 uvicorn
 alembic
 psycopg2-binary
 passlib[bcrypt]
 python-jose
 python-dotenv
+asyncpg
